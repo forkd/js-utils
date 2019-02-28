@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Abacus - The Open-Source CVSS Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="José Lopes de Oliveira Jr.">
+    <meta name="description" content="Abacus - The Open-Source CVSS Calculator">
+    <meta name="keywords" content="security, information, risk, incident, vulnerability, cvss">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="img/abacus-logo-16x16.png">
+
+    <!-- Analytics here -->
+</head>
+<body style="padding-top: 70px;">  <!-- fixed navbar requires addtional padding -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-content">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h4 class="navbar-text navbar-left"><label class="label label-default" id="score">0</label></h4>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <input type="text" class="form-control input-group navbar-form navbar-left" id="vector" onClick="this.select();" value="AV:L/AC:H/Au:M/C:N/I:N/A:N">
+                <a class="navbar-brand navbar-right" href="#">Abacus</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" id="base">
+        <h4><span class="btn btn-primary" data-toggle="modal" data-target="#base-modal">Base Metrics</span></h4>
+        <form class="form-group">
+            <label for="base-av" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric reflects how the vulnerability is exploited.  The more remote an attacker can be to attack a host, the greater the vulnerability score." data-title="Access Vector" id="base-av">Access Vector</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Requires the attacker to have either physical access to the vulnerable system or a local (shell) account." id="rb-av-l">
+                    <input type="radio" name="rb-av" value="r000">Local
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Requires the attacker to have access to either the broadcast or collision domain of the vulnerable software." id="rb-av-a">
+                    <input type="radio" name="rb-av" value="r001">Adjacent Network
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="The vulnerable software is bound to the network stack and the attacker does not require local network access or local access." id="rb-av-n">
+                    <input type="radio" name="rb-av" value="r002">Network
+                </label>
+            </div>
+        </form><br>
+
+        <form class="form-group">
+            <label for="base-ac" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the complexity of the attack required to exploit the vulnerability once an attacker has gained access to the target system.  The lower the required complexity, the higher the vulnerability score." data-title="Access Complexity" id="base-ac">Access Complexity</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Specialized access conditions exist." id="rb-ac-h">
+                    <input type="radio" name="rb-ac" value="r010">High
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="The access conditions are somewhat specialized." id="rb-ac-m">
+                    <input type="radio" name="rb-ac" value="r011">Medium
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Specialized access conditions or extenuating circumstances do not exist." id="rb-ac-l">
+                    <input type="radio" name="rb-ac" value="r012">Low
+                </label>
+            </div>
+        </form><br>
+
+        <form class="form-group">
+            <label for="base-au" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the number of times an attacker must authenticate to a target in order to exploit a vulnerability. The fewer authentication instances that are required, the higher the vulnerability score." data-title="Authentication" id="base-au">Authentication</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Specialized access conditions or extenuating circumstances do not exist." id="rb-au-m">
+                    <input type="radio" name="rb-au" value="r020">Multiple
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Requires an attacker to be logged into the system (such as at a command line or via a desktop session or web interface)." id="rb-au-s">
+                    <input type="radio" name="rb-au" value="r021">Single
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Authentication is not required to exploit the vulnerability." id="rb-au-n">
+                    <input type="radio" name="rb-au" value="r022">None
+                </label>
+            </div>
+        </form><br>
+
+        <form class="form-group">
+            <label for="base-c" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the impact on confidentiality of a successfully exploited vulnerability.  Increased confidentiality impact increases the vulnerability score." data-title="Confidentiality Impact" id="base-c">Confidentiality Impact</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is no impact to the confidentiality of the system." id="rb-c-n">
+                    <input type="radio" name="rb-c" value="r030">None
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is considerable informational disclosure." id="rb-c-p">
+                    <input type="radio" name="rb-c" value="r031">Partial
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is total information disclosure, resulting in all system files being revealed." id="rb-c-c">
+                    <input type="radio" name="rb-c" value="r032">Complete
+                </label>
+            </div>
+        </form><br>
+
+        <form class="form-group">
+            <label for="base-i" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the impact to integrity of a successfully exploited vulnerability.  Increased integrity impact increases the vulnerability score." data-title="Integrity Impact" id="base-i">Integrity Impact</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is no impact to the integrity of the system." id="rb-i-n">
+                    <input type="radio" name="rb-i" value="r040">None
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Modification of some system files or information is possible, but the attacker does not have control over what can be modified, or the scope of what the attacker can affect is limited." id="rb-i-p">
+                    <input type="radio" name="rb-i" value="r041">Partial
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is a total compromise of system integrity." id="rb-i-c">
+                    <input type="radio" name="rb-i" value="r042">Complete
+                </label>
+            </div>
+        </form><br>
+
+        <form class="form-group">
+            <label for="base-a" class="col-sm-2 control-label"><span class="label label-primary" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the impact to availability of a successfully exploited vulnerability. Increased availability impact increases the vulnerability score." data-title="Availability Impact" id="base-a">Availability Impact</span></label>
+            <div class="btn-group btn-group-xs" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="There is no impact to the availability of the system." id="rb-a-n">
+                    <input type="radio" name="rb-a" value="r050">None
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="There is reduced performance or interruptions in resource availability." id="rb-a-p">
+                    <input type="radio" name="rb-a" value="r051">Partial
+                </label>
+                <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="There is a total shutdown of the affected resource." id="rb-a-c">
+                    <input type="radio" name="rb-a" value="r052">Complete
+                </label>
+            </div>
+        </form>
+
+        <div class="modal fade" id="base-modal" tabindex="-1" role="dialog" aria-labelledby="base-modal-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="base-modal-label">Metrics</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>CVSS is composed of three metric groups: Base, Temporal, and Environmental, each consisting of a set of metrics.</p>
+                        <h4><span class="label label-primary">Base Metrics</span></h4>
+                        <p>The base metric group captures the characteristics of a vulnerability that are constant with time and across user environments. The Access Vector, Access Complexity, and Authentication metrics capture how the vulnerability is accessed and whether or not extra conditions are required to exploit it. The three impact metrics measure how a vulnerability, if exploited, will directly affect an IT asset, where the impacts are independently defined as the degree of loss of confidentiality, integrity, and availability. For example, a vulnerability could cause a partial loss of integrity and availability, but no loss of confidentiality.</p>
+
+                        <h4><span class="label label-warning">Temporal Metrics</span></h4>
+                        <p>The threat posed by a vulnerability may change over time. Three such factors that CVSS captures are: confirmation of the technical details of a vulnerability, the remediation status of the vulnerability, and the availability of exploit code or techniques. Since temporal metrics are optional they each include a metric value that has no effect on the score. This value is used when the user feels the particular metric does not apply and wishes to "skip over" it.</p>
+
+                        <h4><span class="label label-success">Environmental Metrics</span></h4>
+                        <p>Different environments can have an immense bearing on the risk that a vulnerability poses to an organization and its stakeholders. The CVSS environmental metric group captures the characteristics of a vulnerability that are associated with a user's IT environment. Since environmental metrics are optional they each include a metric value that has no effect on the score. This value is used when the user feels the particular metric does not apply and wishes to "skip over" it.</p>
+
+                        <img class="img-responsive" src="img/cvss-metric-equations.jpg">
+                        <p><small><em>This image is part of CVSS v2 Guide.</em></small></p>
+
+                        <p>Read more at <a href="http://www.first.org/cvss/cvss-guide.html" target="_blank">CVSS v2 Complete Documentation</a>.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- Base Metrics -->
+
+    <section class="container panel-group" id="temp">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#temp" href="#temp-data" id="temp-title">
+                        <span class="btn btn-warning">Temporal Metrics</span>
+                    </a>
+                </h4>
+            </div>
+            <div id="temp-data" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <form class="form-group">
+                        <label for="temp-e" class="col-sm-2 control-label"><span class="label label-warning" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the current state of exploit techniques or code availability.  The more easily a vulnerability can be exploited, the higher the vulnerability score." data-title="Exploitability" id="temp-e">Exploitability</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="No exploit code is available, or an exploit is entirely theoretical." id="rt-e-u">
+                                <input type="radio" name="rt-e" value="r100">Unproven
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Proof-of-concept exploit code or an attack demonstration that is not practical for most systems is available." id="rt-e-poc">
+                                <input type="radio" name="rt-e" value="r101">Proof-of-Concept
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Functional exploit code is available." id="rt-e-f">
+                                <input type="radio" name="rt-e" value="r102">Functional
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Either the vulnerability is exploitable by functional mobile autonomous code, or no exploit is required (manual trigger) and details are widely available." id="rt-e-h">
+                                <input type="radio" name="rt-e" value="r103">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="rt-e-nd">
+                                <input type="radio" name="rt-e" value="r104">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="temp-rl" class="col-sm-2 control-label"><span class="label label-warning" data-container="body" data-toggle="popover" data-placement="right" data-content="The remediation level of a vulnerability is an important factor for prioritization.  The less official and permanent a fix, the higher the vulnerability score is." data-title="Remediation Level" id="temp-rl">Remediation Level</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="A complete vendor solution is available." id="rt-rl-of">
+                                <input type="radio" name="rt-rl" value="r110">Official Fix
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is an official but temporary fix available." id="rt-rl-tf">
+                                <input type="radio" name="rt-rl" value="r111">Temporary Fix
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is an unofficial, non-vendor solution available." id="rt-rl-w">
+                                <input type="radio" name="rt-rl" value="r112">Workaround
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is either no solution available or it is impossible to apply." id="rt-rl-u">
+                                <input type="radio" name="rt-rl" value="r113">Unavailable
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="rt-rl-nd">
+                                <input type="radio" name="rt-rl" value="r114">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="temp-rc" class="col-sm-2 control-label"><span class="label label-warning" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the degree of confidence in the existence of the vulnerability and the credibility of the known technical details.  The more a vulnerability is validated by the vendor or other reputable sources, the higher the score." data-title="Report Confidence" id="temp-rc">Report Confidence</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="There is a single unconfirmed source or possibly multiple conflicting reports." id="rt-rc-uc">
+                                <input type="radio" name="rt-rc" value="r120">Unconfirmed
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="There are multiple non-official sources, possibly including independent security companies or research organizations." id="rt-rc-ur">
+                                <input type="radio" name="rt-rc" value="r121">Uncorroborated
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="The vulnerability has been acknowledged by the vendor or author of the affected technology. " id="rt-rc-c">
+                                <input type="radio" name="rt-rc" value="r122">Confirmed
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Assigning this value to the metric will not influence the score." id="rt-rc-nd">
+                                <input type="radio" name="rt-rc" value="r123">Not Defined
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>  <!-- temp-data -->
+        </div>
+    </section>  <!-- Temporal Metrics -->
+
+    <section class="container panel-group" id="envi">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#envi" href="#envi-data" id="envi-title">
+                        <span class="btn btn-success">Environmental Metrics</span>
+                    </a>
+                </h4>
+            </div>
+            <div id="envi-data" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <form class="form-group">
+                        <label for="envi-cdp" class="col-sm-2 control-label"><span class="label label-success" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the potential for loss of life or physical assets through damage or theft of property or equipment.  Naturally, the greater the damage potential, the higher the vulnerability score." data-title="Collateral Damage Potential" id="envi-cdp">Collateral Damage Potential</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="There is no potential for loss of life, physical assets, productivity or revenue." id="re-cdp-n">
+                                <input type="radio" name="re-cdp" value="r200">None
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="May result in slight physical or property damage." id="re-cdp-l">
+                                <input type="radio" name="re-cdp" value="r201">Low
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="May result in moderate physical or property damage. " id="re-cdp-lm">
+                                <input type="radio" name="re-cdp" value="r202">Low-Medium
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="May result in significant physical or property damage or loss." id="re-cdp-mh">
+                                <input type="radio" name="re-cdp" value="r203">Medium-High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="May result in catastrophic physical or property damage and loss." id="re-cdp-h">
+                                <input type="radio" name="re-cdp" value="r204">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="re-cdp-nd">
+                                <input type="radio" name="re-cdp" value="r205">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="envi-td" class="col-sm-2 control-label"><span class="label label-success" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric measures the proportion of vulnerable systems.  The greater the proportion of vulnerable systems, the higher the score." data-title="Target Distribution" id="envi-td">Target Distribution</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="No target systems exist." id="re-td-n">
+                                <input type="radio" name="re-td" value="r210">None
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Targets exist inside the environment, but on a small scale." id="re-td-l">
+                                <input type="radio" name="re-td" value="r211">Low
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Targets exist inside the environment, but on a medium scale." id="re-td-m">
+                                <input type="radio" name="re-td" value="r212">Medium
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Targets exist inside the environment on a considerable scale." id="re-td-h">
+                                <input type="radio" name="re-td" value="r213">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="re-td-nd">
+                                <input type="radio" name="re-td" value="r214">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="envi-cr" class="col-sm-2 control-label"><span class="label label-success" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric enables the analyst to customize the CVSS score depending on the importance of the affected IT asset to a user’s organization, measured in terms of confidentiality. The full effect on the environmental score is determined by the corresponding base impact metrics. That is, this metric modifies the environmental score by reweighting the (base) confidentiality impact metric. This metric will modify the score as much as plus or minus." data-title="Confidentiality Requirement" id="envi-cr">Confidentiality Requirement</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of confidentiality is likely to have only a limited adverse effect on the organization or individuals associated with the organization." id="re-cr-l">
+                                <input type="radio" name="re-cr" value="r220">Low
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of confidentiality is likely to have a serious adverse effect on the organization or individuals associated with the organization." id="re-cr-m">
+                                <input type="radio" name="re-cr" value="r221">Medium
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of confidentiality is likely to have a catastrophic adverse effect on the organization or individuals associated with the organization." id="re-cr-h">
+                                <input type="radio" name="re-cr" value="r222">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="re-cr-nd">
+                                <input type="radio" name="re-cr" value="r223">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="envi-ir" class="col-sm-2 control-label"><span class="label label-success" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric enables the analyst to customize the CVSS score depending on the importance of the affected IT asset to a user’s organization, measured in terms of integrity.  The full effect on the environmental score is determined by the corresponding base impact metrics.  That is, this metric modifies the environmental score by reweighting the (base) integrity impact metric.  This metric will modify the score as much as plus or minus." data-title="Integrity Requirement" id="envi-ir">Integrity Requirement</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of integrity is likely to have only a limited adverse effect on the organization or individuals associated with the organization." id="re-ir-l">
+                                <input type="radio" name="re-ir" value="r230">Low
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of integrity is likely to have a serious adverse effect on the organization or individuals associated with the organization." id="re-ir-m">
+                                <input type="radio" name="re-ir" value="r231">Medium
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Loss of integrity is likely to have a catastrophic adverse effect on the organization or individuals associated with the organization" id="re-ir-h">
+                                <input type="radio" name="re-ir" value="r232">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Assigning this value to the metric will not influence the score." id="re-ir-nd">
+                                <input type="radio" name="re-ir" value="r233">Not Defined
+                            </label>
+                        </div>
+                    </form><br>
+
+                    <form class="form-group">
+                        <label for="envi-ar" class="col-sm-2 control-label"><span class="label label-success" data-container="body" data-toggle="popover" data-placement="right" data-content="This metric enables the analyst to customize the CVSS score depending on the importance of the affected IT asset to a user’s organization, measured in terms of availability.  The full effect on the environmental score is determined by the corresponding base impact metrics.  That is, this metric modifies the environmental score by reweighting the (base) availability impact metric.  This metric will modify the score as much as plus or minus." data-title="Availability Requirement" id="envi-ar">Availability Requirement</span></label>
+                        <div class="btn-group btn-group-xs" data-toggle="buttons">
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Loss of availability is likely to have only a limited adverse effect on the organization or individuals associated with the organization." id="re-ar-l">
+                                <input type="radio" name="re-ar" value="r240">Low
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Loss of availability is likely to have a serious adverse effect on the organization or individuals associated with the organization." id="re-ar-m">
+                                <input type="radio" name="re-ar" value="r241">Medium
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Loss of availability is likely to have a catastrophic adverse effect on the organization or individuals associated with the organization." id="re-ar-h">
+                                <input type="radio" name="re-ar" value="r242">High
+                            </label>
+                            <label class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Assigning this value to the metric will not influence the score." id="re-ar-nd">
+                                <input type="radio" name="re-ar" value="r243">Not Defined
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>  <!-- Environmental Metrics -->
+
+    <section class="container" id="info">
+        <h3><code>$ man abacus</code></h3>
+        <h4>Definition</h4>
+        <blockquote class="blockquote-reverse">
+                <p>Common Vulnerability Scoring System (<strong>CVSS</strong>) is a free and open industry standard for assessing the severity of computer system security vulnerabilities.  It is under the custodianship of the <a href="http://www.first.org/" target="_blank">Forum of Incident Response and Security Teams</a> (FIRST).  It attempts to establish a measure of how much concern a vulnerability warrants, compared to other vulnerabilities, so efforts can be prioritized.  The scores are based on a series of measurements --called metrics-- based on expert assessment.  The scores range from 0 to 10. Vulnerabilities with a base score in the range 7.0-10.0 are <strong>critical</strong>, those in the range 4.0-6.9 as <strong>major</strong>, and 0-3.9 as <strong>minor</strong>.</p>
+                <footer><a href="http://en.wikipedia.org/wiki/CVSS" target="_blank">Wikipedia</a>, May 2014
+        </blockquote>
+
+        <p>Abacus is an open-source implementation of CVSS rules.  Although NIST had already made the <em>de-facto</em> <a href="http://nvd.nist.gov/cvss.cfm?calculator&version=2" target="_blank">CVSS v2 calculator</a>, it's not free nor open-source.  Abacus does not intend to substitute that calculator, however it's another choice for the users --specially for those who care about knowing the source code.</p>
+
+        <h4><em>Modus Operandi</em></h4>
+        <p>Unlike <a href="http://nvd.nist.gov/cvss.cfm?calculator&version=2" target="_blank">NIST's calculator</a>, Abacus does not use "not defined" options.  Instead, every metric is initialized with its first values --e.g., Local for Access Vector and Unproven for Exploitability.</p>
+
+        <p>If user expands Temporal and/or Environmental metrics, score and vector will be recalculated, considering those metrics are set with their first values.</p>
+        <p>Be known that you will always have to use Base metrics.  Temporal metrics can be turned on at your will, but Environmental metrics depend on Temporal.  This way, if you turn on Environmental metrics and Temporal are off, it will be turned on too.  The same way, if you turn down Temporal metrics and Environmental metrics are on, it'll be turned off.  Consider using the "Not Defined" values to ignore certain metrics, as described in <a href="http://www.first.org/cvss/cvss-guide.html" target="_blank">CVSS v2 Guide</a>.</p>
+
+        <h4>Help</h4>
+        <p>You can click on any of the metrics to get a short description of it, according to the <a href="http://www.first.org/cvss/cvss-guide.html" target="_blank">CVSS v2 Guide</a>.  You can get a description of what those metrics mean by clicking on <span class="label label-primary">Base Metrics</span> title.  Further information can be found in <a href="http://www.first.org/cvss/cvss-guide.html" target="_blank">CVSS v2 Guide</a>.</p>
+
+        <h4>Inputs</h4>
+        <p>The "default" way of using Abacus is by selecting the options on radio buttons and checking the result at the screen top.  However, you can also use the URI to pass a vector to the program as a parameter.</p>
+        
+        <p>An example of valid parameter is <code>?v=AV:N/AC:L/Au:N/C:C/I:C/A:C/E:POC/RL:W/RC:C</code>.  You must use the <code>v=</code> to start the vector and type a valid string according to <a href="http://www.first.org/cvss/cvss-guide.html" target="_blank">CVSS v2 Guide</a>.  Note that Abacus is case insensitive to improve user's experience.</p>
+
+        <h4>Security</h4>
+        <p>Abacus was implemented to run only on the user's host.  None data is sent over the network.  Confidentiality Impact: None.</p>
+    </section>
+
+    <!-- <section id="comments">
+    </section> -->
+
+    <footer class="navbar navbar-default navbar-static-bottom">
+        <div class="container-fluid">
+            <p class="navbar-text">Proudly built with <a href="http://jquery.com" target="_blank">jQuery 2.1.0</a> and <a href="http://getbootstrap.com" target="_blank">Bootstrap 3.1.1</a>.  Fork me on <a href="https://github.com/forkd/abacus" target="_blank">GitHub</a>.</p>
+            <a class="navbar-right navbar-text badge" href="http://jilo.cc">Jiló</a>
+        </div>
+    </footer>
+
+    <!-- Javascripts -->
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/cvss2.js"></script>
+</body>
+</html>

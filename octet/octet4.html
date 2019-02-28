@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Octet - Another IP Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="José Lopes de Oliveira Jr.">
+    <meta name="description" content="Octet - Another IP Calculator">
+    <meta name="keywords" content="computer networks, ip, networking, ip calculator, cidr">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="img/octet-logo-16.png">
+
+    <!-- Analytics here -->
+</head>
+
+<body style="padding-top: 70px;">  <!-- for fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-content">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="navbar-text navbar-left" src="img/octet-logo.svg" width="16px">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <h4 class="navbar-text navbar-left">Octet</h4>
+                <a class="navbar-brand navbar-right" href="http://jilo.cc">Jiló</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container">
+        <div>
+            <input type="text" class="form-control input-group" id="input-ipmask" placeholder="Type the IP address and mask (optional) and hit <enter>">
+        </div>
+
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th class="text-nowrap"><span id="span-0" class="label label-primary">IP address</span></th>
+                <td><span id="octet-0">127.0.0.1</span></td>
+                <td><code id="octet-0-bin">01111111 00000000 00000000 00000001</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-1" class="label label-primary">Subnet mask</span></th>
+                <td><span id="octet-1">255.0.0.0</span></td>
+                <td><code id="octet-1-bin">11111111 00000000 00000000 00000000</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-2" class="label label-primary">Wildcard mask</span></th>
+                <td><span id="octet-2">0.255.255.255</span></td>
+                <td><code id="octet-2-bin">00000000 11111111 11111111 11111111</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-3" class="label label-primary">Network address</span></th>
+                <td><span id="octet-3">127.0.0.0</span></td>
+                <td><code id="octet-3-bin">01111111 00000000 00000000 00000000</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-4" class="label label-primary">Broadcast address</span></th>
+                <td><span id="octet-4">127.255.255.255</span></td>
+                <td><code id="octet-4-bin">01111111 11111111 11111111 11111111</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-5" class="label label-primary">First host address</span></th>
+                <td><span id="octet-5">127.0.0.1</span></td>
+                <td><code id="octet-5-bin">01111111 00000000 00000000 00000001</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-6" class="label label-primary">Last host address</span></th>
+                <td><span id="octet-6">127.255.255.254</span></td>
+                <td><code id="octet-6-bin">01111111 11111111 11111111 11111110</code></td>
+            </tr>
+            <tr>
+                <th class="text-nowrap"><span id="span-7" class="label label-primary">Number of hosts</span></th>
+                <td><span id="octet-7">16777214</span></td>
+                <td><code id="octet-7-bin">111111111111111111111110</code></td>
+            </tr>
+        </table>
+        </div>
+    </section>
+
+    <!--COMMENTS>
+    <section id="comments" class="container>
+    <h3>Leave a comment</h3>
+    </section>
+    -->
+
+    <footer class="navbar navbar-default navbar-static-bottom">
+        <div class="container-fluid">
+            <p class="navbar-text">Proudly built with <a href="http://jquery.com" target="_blank">jQuery 2.1.1</a> and <a href="http://getbootstrap.com" target="_blank">Bootstrap 3.2.0</a>.  Fork me on <a href="https://github.com/forkd/octet" target="_blank">GitHub</a>.</p>
+            <a class="navbar-right navbar-text badge" href="http://b.jilo.cc">Jiló</a>
+        </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ipv4-calc.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Documentos Brasileiros - Jiló</title>
+        <meta name="author" content="José Lopes Oliveira Jr." />
+        <meta name="description" content="Criação e validação de alguns documentos brasileiros" />
+        <meta name="keywords" content="cpf, cgc, cnpj, título eleitoral, cartão de crédito, javascript" />
+
+        <!-- Styles -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+        <link rel="icon" href="img/jilogo-16x16.png">
+    </head>
+    <body>
+        <!--GitHub ribbon-->
+        <a href="https://github.com/forkd/bradocs"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+        <div class="container">
+            <div class="page-header" id="intro">
+                <h3>Documentos Brasileiros <small>por José Lopes Oliveira Jr.</small></h3>
+            </div>
+        
+            <div class="row">
+                <div class="col-xs-6">
+                    <section id="cpf">
+                        <h4>CPF <small>Cadastro de Pessoas Físicas</small></h4>
+                        <form id="form-cpf" class="form-inline" role="form">
+                            <div class="form-group">
+                                <input name="input-cpf" class="form-control" type="text" id="input-cpf" maxlength="14">
+                            </div>
+                            <button name="btn-cpf" type="submit" class="btn btn-default" id="btn-cpf">Vai</button>
+                        <label id="result-cpf">123.456.789-??</label>
+                        </form>
+                    </section>
+                    
+                    <section id="cnpj">
+                        <h4>CNPJ <small>Cadastro Nacional de Pessoa Jurídica</small></h4>
+                        <form id="form-cnpj" class="form-inline" role="form">
+                            <div class="form-group">
+                                <input name="input-cnpj" class="form-control" type="text" id="input-cnpj" maxlength="18">
+                            </div>
+                            <button name="btn-cnpj" type="submit" class="btn btn-default" id="btn-cnpj">Vai</button>
+                            <label id="result-cnpj">12.345.678/0009-??</label>
+                        </form>
+                    </section>
+                    
+                    <section id="tiel">
+                        <h4>Título Eleitoral <small><em>Documento inútil</em></small></h4>
+                        <form id="form-tiel" class="form-inline" role="form">
+                            <div class="form-group">
+                                <input name="input-tiel" class="form-control" type="text" id="input-tiel" maxlength="11">
+                            </div>
+                            <button name="btn-tiel" type="submit" class="btn btn-default" id="btn-tiel">Vai</button>
+                            <label id="result-tiel">12345678/??</label>
+                        </form>
+                    </section>
+                    
+                    <section id="ccard">
+                        <h4>Bônus: Cartão de Crédito <small>Dinheiro de plástico</small></h4>
+                        <form id="form-ccard" class="form-inline" role="form">
+                            <div class="form-group">
+                                <input name="input-ccard" class="form-control" type="text" id="input-ccard" maxlength="19">
+                            </div>
+                            <button name="btn-ccard" type="submit" class="btn btn-default" id="btn-ccard">Vai</button>
+                            <label id="result-ccard">1234 5678 9012 345?</label>
+                        </form>
+                    </section>
+                </div> <!--col-xs-6-->
+
+                <div class="col-xs-6">
+                    <p>Alguns dos principais documentos brasileiros utilizam as mesmas bases de cálculo para seus dígitos verificadores --representados nos exemplos ao lado pelo sinal de interrogação--, que são os algorítmos conhecidos como <b>Modulus 10</b> e <b>Modulus 11</b>.  Como em muitas implementações para cálculo desses dígitos não separa estes algorítmos do cálculo em si, resultando na repetição de código, este projeto em <b>Javascript</b>, surge para mostrar como essa abordagem é mais fácil e até mesmo mais lógica.</p>
+                    <p>Com esta página de exemplo objetiva-se mostrar o funcionamento dessa solução, bem como chamar a atenção de programadores para a validação de dados do usuário.  A maioria dos sistemas obriga os usuários a digitar documentos --até mesmo números de telefone-- da forma com que esperam: somente os números ou com a formatação adequada.  Acontece que já existe tecnologia para permitir que os dados sejam digitados da forma que o usuário quiser e o programa processar essa entrada adequadamente.</p>
+                    <p>Os campos ao lado podem ser preenchidos como quiser: somente números, formatados com pontos e traços, com espaços ou quaisquer caracteres não numéricos.  Somente os números serão levados em consideração.  Caso todos os números esperados sejam digitados --e.g., 11 para o CPF--, o sistema verificará se eles formam um número válido de documento.  Se positivo, ele será impresso no label próximo, formatado e na cor <b>verde</b>.  Caso contrário ficará na cor <b>vermelha</b>.  Se mais números forem digitados, apenas os X primeiros serão considerados, onde X é o limite para cada documento.  Se menos números --ou nenhum-- forem digitados, o sistema preencherá os restantes aleatoriamente e calculará os dígitos verificadores, apresentando o número em <b>preto</b> no label.</p>
+                    <p>Mais informações --em inglês-- podem ser obtidas no código-fonte do projeto ou no seu repositório no <a href="https://github.com/forkd/bradocs" target="_blank" title="Bradocs by forkd on GitHub">GitHub</a>.  Visite também meu <a href="http://b.jilo.cc" title="Jiló Blog">Blog</a>!</p>
+                </div> <!--col-xs-6-->
+            </div> <!--row-->
+
+            <!--<section id="comments">
+            </section>-->
+
+            <footer>
+                <p>Este trabalho está licenciado com uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons</a>.</p>
+            </footer>
+        </div> <!--container-->
+    </body>
+
+    <!-- Javacripts -->
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bradocs.js"></script>
+</html>

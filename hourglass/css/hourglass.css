@@ -1,0 +1,19 @@
+h1{
+    font-size: 15rem;
+    font-weight: bold;
+    letter-spacing: -.5rem;
+}
+
+@media (min-width: 550px){
+    h1{font-size: 25rem;}
+}
+
+body{
+    background-color: yellowgreen;
+}
+
+.header{
+    margin-top: 6rem;
+    text-align: center;
+}
+

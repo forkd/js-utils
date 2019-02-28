@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Locksmith - Open Source Password Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="José Lopes de Oliveira Jr.">
+    <meta name="description" content="Locksmith - Open Source Password Generator">
+    <meta name="keywords" content="information security, password, passwd, generator">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="img/locksmith-logo-16.png">
+
+    <!-- Analytics here -->
+</head>
+
+<body style="padding-top: 70px;"> <!-- for fixed navbar on smaller screens -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-content">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="navbar-text navbar-left" src="img/locksmith-logo.svg" width="16px">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <h4 class="navbar-text navbar-left">Locksmith</h4>
+                <a class="navbar-brand navbar-right" href="http://hakspek.blogspot.com">hakspek</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container well center-block">  <!-- OUTPUT PASSWORD -->
+        <input type="text" id="txt_output" class="form-control input-lg" readonly>
+    </section>
+
+    <section class="container well center-block">  <!-- BUTTONS -->
+        <button type="button" id="btn_gen" class="btn btn-primary btn-block">Generate</button>
+        <button type="button" id="btn_similar" class="btn btn-default btn-block">Remove Similar</button>
+        <button type="button" id="btn_program" class="btn btn-default btn-block">Programmer-friendly</button>
+    </section>
+
+    <section class="container well center-block">  <!--PASSWORD LENGTH -->
+        <div class="input-group">
+            <span class="input-group-addon">length</span>
+            <input type="text" id="txt_length" placeholder="set length here" value="20" class="form-control">
+        </div>
+    </section>
+
+    <section class="container well center-block">  <!--CHECKBOXES -->  
+        <label class="checkbox-inline"><input type="checkbox" id="chk_upper" value="upper" checked><span class="label label-info">LETTERS</span></label>
+        <label class="checkbox-inline"><input type="checkbox" id="chk_lower" value="lower" checked><span class="label label-info">letters</span></label>
+        <label class="checkbox-inline"><input type="checkbox" id="chk_numbers" value="numbers" checked><span class="label label-info">Numbers</span></label>
+        <label class="checkbox-inline"><input type="checkbox" id="chk_nalpha" value="nalpha" checked><span class="label label-info">Non-Alpha</span></label>
+    </section>
+
+    <section class="container">  <!-- COMMENTS -->
+        <h3>Leave a comment</h3>
+        <!-- paste the code here -->
+    </section>
+
+    <footer class="navbar navbar-default navbar-static-bottom">
+        <div class="container-fluid">
+            <p class="navbar-text"><a href="https://github.com/forkd/locksmith" target="_blank" alt="an open source password generator">Locksmith</a> was proudly built with <a href="https://jquery.com" target="_blank">jQuery 2.1.4</a> and <a href="http://getbootstrap.com" target="_blank">Bootstrap 3.3.5</a>.</p>
+            <a class="navbar-right navbar-text badge" href="http://hakspek.blogspot.com">hakspek</a>
+        </div>
+    </footer>
+
+    <!-- JavaScripts -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/engine.js"></script>
+</body>
+</html>
